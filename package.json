@@ -1,0 +1,33 @@
+{
+  "name": "kounotori",
+  "version": "1.0.0",
+  "description": "Estimate the medical expenses of Assisted reproductive technology.",
+  "main": "index.js",
+  "bin": {
+    "kounotori": "index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SatoshiHaramura/kounotori.git"
+  },
+  "keywords": [
+    "art",
+    "assisted reproductive technology",
+    "simulator"
+  ],
+  "author": "Satoshi Haramura (https://github.com/SatoshiHaramura)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SatoshiHaramura/kounotori/issues"
+  },
+  "homepage": "https://github.com/SatoshiHaramura/kounotori#readme",
+  "dependencies": {
+    "enquirer": "^2.3.6"
+  },
+  "devDependencies": {
+    "eslint": "^8.15.0"
+  }
+}
