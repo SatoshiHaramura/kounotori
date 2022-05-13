@@ -35,5 +35,4 @@ Once you have finished answering the questions, an estimate of your medical expe
 
 ### Example
 
-
 <img width="536" alt="image" src=https://user-images.githubusercontent.com/11376040/168190919-8e1b34c2-9b5b-4545-811d-9620edc4c149.png>
