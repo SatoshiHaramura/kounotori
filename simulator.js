@@ -13,8 +13,10 @@ class Simulator {
   static OTHER_MEDICAL_EXPENSE = 300000
 
   constructor(user) {
-    this.numOfOvumRetrieved = this.#referNumOfOvumRetrieved(user.amh)
-    this.percentageOfCopayment = this.#calculatePercentageOfCopayment(user.isInsuranceCoverage)
+    this.user = user
+
+    this.numOfOvumRetrieved = this.#referNumOfOvumRetrieved()
+    this.percentageOfCopayment = this.#calculatePercentageOfCopayment()
   }
 
   static referAntiMullerianHormone(age) {
@@ -40,18 +42,19 @@ class Simulator {
     else if (46 <= age) return 0.30
   }
 
-  calculateMaximumCopayment(user) {
-    const minimum = this.referMinimumOfCopayment(user.classificationOfHighCostMedicalExpenseBenefit)
+  calculateMaximumCopayment() {
+    const minimum = this.referMinimumOfCopayment()
 
-    if (((user.classificationOfHighCostMedicalExpenseBenefit === 1) || (user.classificationOfHighCostMedicalExpenseBenefit === 2)) && (this.calculateTotalMedicalExpense(this.calculateTotalMedicalRemunerationPoint()) > (minimum / (Simulator.PERCENTAGE_OF_INSURANCE_COVERAGE / 100)))) {
+    if (((this.user.classificationOfHighCostMedicalExpenseBenefit === 1) || (this.user.classificationOfHighCostMedicalExpenseBenefit === 2)) && (this.calculateTotalMedicalExpense(this.calculateTotalMedicalRemunerationPoint()) > (minimum / (Simulator.PERCENTAGE_OF_INSURANCE_COVERAGE / 100)))) {
       return minimum
-    } else if (((user.classificationOfHighCostMedicalExpenseBenefit === 3) || (user.classificationOfHighCostMedicalExpenseBenefit === 4) || (user.classificationOfHighCostMedicalExpenseBenefit === 5)) && (this.calculateTotalMedicalExpense(this.calculateTotalMedicalRemunerationPoint()) > (minimum / (Simulator.PERCENTAGE_OF_INSURANCE_COVERAGE / 100)))) {
+    } else if (((this.user.classificationOfHighCostMedicalExpenseBenefit === 3) || (this.user.classificationOfHighCostMedicalExpenseBenefit === 4) || (this.user.classificationOfHighCostMedicalExpenseBenefit === 5)) && (this.calculateTotalMedicalExpense(this.calculateTotalMedicalRemunerationPoint()) > (minimum / (Simulator.PERCENTAGE_OF_INSURANCE_COVERAGE / 100)))) {
       return minimum + (this.calculateTotalMedicalExpense(this.calculateTotalMedicalRemunerationPoint()) - (minimum / (Simulator.PERCENTAGE_OF_INSURANCE_COVERAGE / 100))) * (1 / 100)
     }
     return false
   }
 
-  #referNumOfOvumRetrieved(amh) {
+  #referNumOfOvumRetrieved() {
+    const amh = this.user.amh
     if (amh < 0.5) return 2.04
     else if (0.5 <= amh && amh < 1.0) return 3.61
     else if (1.0 <= amh && amh < 1.5) return 5.45
@@ -132,8 +135,8 @@ class Simulator {
       + Simulator.POINT_OF_FROZEN_EMBRYO_TRANSFER
   }
 
-  #calculatePercentageOfCopayment(isInsuranceCoverage) {
-    return isInsuranceCoverage ? (Simulator.PERCENTAGE_OF_INSURANCE_COVERAGE / 100) : (Simulator.PERCENTAGE_OF_NOT_INSURANCE_COVERAGE / 100)
+  #calculatePercentageOfCopayment() {
+    return this.user.isInsuranceCoverage ? (Simulator.PERCENTAGE_OF_INSURANCE_COVERAGE / 100) : (Simulator.PERCENTAGE_OF_NOT_INSURANCE_COVERAGE / 100)
   }
 
   calculateMedicalExpense(medicalRemunerationPoint) {
@@ -152,16 +155,17 @@ class Simulator {
     return this.calculateTotalMedicalExpense(medicalRemunerationPoint) * this.percentageOfCopayment
   }
 
-  referMinimumOfCopayment(classificationOfHighCostMedicalExpenseBenefit) {
-    if (classificationOfHighCostMedicalExpenseBenefit === 1) return 35400
-    else if (classificationOfHighCostMedicalExpenseBenefit === 2) return 57600
-    else if (classificationOfHighCostMedicalExpenseBenefit === 3) return 80100
-    else if (classificationOfHighCostMedicalExpenseBenefit === 4) return 167400
-    else if (classificationOfHighCostMedicalExpenseBenefit === 5) return 252600
+  referMinimumOfCopayment() {
+    const classification = this.user.classificationOfHighCostMedicalExpenseBenefit
+    if (classification === 1) return 35400
+    else if (classification === 2) return 57600
+    else if (classification === 3) return 80100
+    else if (classification === 4) return 167400
+    else if (classification === 5) return 252600
   }
 
-  calculateReducedCopayment(classificationOfHighCostMedicalExpenseBenefit) {
-    return this.calculateTotalMedicalExpenseOfCopayment(this.calculateTotalMedicalRemunerationPoint()) - this.calculateMaximumCopayment(classificationOfHighCostMedicalExpenseBenefit)
+  calculateReducedCopayment() {
+    return this.calculateTotalMedicalExpenseOfCopayment(this.calculateTotalMedicalRemunerationPoint()) - this.calculateMaximumCopayment()
   }
 }
 

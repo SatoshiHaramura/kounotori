@@ -1,8 +1,7 @@
 const { Simulator } = require('./simulator.js')
 
 class Terminal {
-  constructor(user, simulator) {
-    this.user = user
+  constructor(simulator) {
     this.simulator = simulator
   }
 
@@ -35,8 +34,8 @@ class Terminal {
       ----------------------------------------------------------
       シミュレーションの条件
         ・ご本人様
-          ・年齢    : ${this.user.age}歳
-          ・AMH値   : ${this.user.amh}
+          ・年齢    : ${this.simulator.user.age}歳
+          ・AMH値   : ${this.simulator.user.amh}
           ・負担割合: ${this.#formatRateOfCopayment()}
 
         ・治療内容
@@ -60,16 +59,16 @@ class Terminal {
     高額療養費制度を利用したシミュレーション結果
     ==============================================================
       医療費の総額  : ${this.#formatYen(this.simulator.calculateTotalMedicalExpenseOfCopayment(this.simulator.calculateTotalMedicalRemunerationPoint()))} (${this.#formatRateOfCopayment()}負担)
-      軽減される額  : ${this.#formatYen(this.simulator.calculateReducedCopayment(this.user))}
+      軽減される額  : ${this.#formatYen(this.simulator.calculateReducedCopayment())}
       ----------------------------------------------------------
-      自己負担限度額: ${this.#formatYen(this.simulator.calculateMaximumCopayment(this.user))} (ひと月)
+      自己負担限度額: ${this.#formatYen(this.simulator.calculateMaximumCopayment())} (ひと月)
     ==============================================================
     `)
   }
 
   displaySimulationResultOfUnavailableHighCostMedicalExpenseBenefit() {
     console.log(`
-    医療費の総額(${this.#formatYen(this.simulator.calculateTotalMedicalExpenseOfCopayment(this.simulator.calculateTotalMedicalRemunerationPoint()))})が自己負担限度額(${this.#formatYen(this.simulator.referMinimumOfCopayment(this.user.classificationOfHighCostMedicalExpenseBenefit))})を
+    医療費の総額(${this.#formatYen(this.simulator.calculateTotalMedicalExpenseOfCopayment(this.simulator.calculateTotalMedicalRemunerationPoint()))})が自己負担限度額(${this.#formatYen(this.simulator.referMinimumOfCopayment())})を
     超えていないため、高額療養費制度をご利用できません。`)
   }
 

@@ -16,13 +16,13 @@ async function main() {
 
   const user = new User(age, amh)
   const simulator = new Simulator(user)
-  const terminal = new Terminal(user, simulator)
+  const terminal = new Terminal(simulator)
 
   terminal.displaySimulationResultOfAssistedReproductiveTechnology()
 
   if (user.isInsuranceCoverage && await confirmHighCostMedicalExpenseBenefitPrompt.run()) {
     user.classificationOfHighCostMedicalExpenseBenefit = await classificationOfHighCostMedicalExpenseBenefitPrompt.run()
-    simulator.calculateMaximumCopayment(user) ? terminal.displaySimulationResultOfAvailableHighCostMedicalExpenseBenefit() : terminal.displaySimulationResultOfUnavailableHighCostMedicalExpenseBenefit()
+    simulator.calculateMaximumCopayment() ? terminal.displaySimulationResultOfAvailableHighCostMedicalExpenseBenefit() : terminal.displaySimulationResultOfUnavailableHighCostMedicalExpenseBenefit()
   }
 }
 
