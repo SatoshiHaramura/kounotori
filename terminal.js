@@ -5,7 +5,7 @@ class Terminal {
     this.simulator = simulator
   }
 
-  displaySimulationResultOfAssistedReproductiveTechnology() {
+  displayAssistedReproductiveTechnology() {
     console.log(`
     生殖補助医療における医療費のシミュレーション結果
     ==============================================================` +
@@ -54,7 +54,7 @@ class Terminal {
     `)
   }
 
-  displaySimulationResultOfAvailableHighCostMedicalExpenseBenefit() {
+  displayAvailableHighCostMedicalExpenseBenefit() {
     console.log(`
     高額療養費制度を利用したシミュレーション結果
     ==============================================================
@@ -66,7 +66,7 @@ class Terminal {
     `)
   }
 
-  displaySimulationResultOfUnavailableHighCostMedicalExpenseBenefit() {
+  displayUnavailableHighCostMedicalExpenseBenefit() {
     console.log(`
     医療費の総額(${this.#formatYen(this.simulator.calculateTotalMedicalExpenseOfCopayment(this.simulator.calculateTotalMedicalRemunerationPoint()))})が自己負担限度額(${this.#formatYen(this.simulator.referMinimumOfCopayment())})を
     超えていないため、高額療養費制度をご利用できません。`)
