@@ -53,17 +53,6 @@ class Simulator {
     return false
   }
 
-  #referNumOfOvumRetrieved() {
-    const amh = this.user.amh
-    if (amh < 0.5) return 2.04
-    else if (0.5 <= amh && amh < 1.0) return 3.61
-    else if (1.0 <= amh && amh < 1.5) return 5.45
-    else if (1.5 <= amh && amh < 2.0) return 6.82
-    else if (2.0 <= amh && amh < 2.5) return 8.63
-    else if (2.5 <= amh && amh < 3.0) return 10.92
-    else if (3.0 <= amh ) return 13.50
-  }
-
   calculateNumOfInVitroFertilization() {
     return Math.floor(this.numOfOvumRetrieved / 2)
   }
@@ -87,14 +76,6 @@ class Simulator {
     else if (2 <= num && num < 6) return 3600
     else if (6 <= num && num < 10) return 5500
     else if (10 <= num) return 7200
-  }
-
-  #referPointOfIntracytoplasmicSpermInjection() {
-    const num = this.calculateNumOfIntracytoplasmicSpermInjection()
-    if (1 <= num && num < 2) return 4800
-    else if (2 <= num && num < 6) return 6800
-    else if (6 <= num && num < 10) return 10000
-    else if (10 <= num) return 12800
   }
 
   calculatePointOfSplitInsemination() {
@@ -135,10 +116,6 @@ class Simulator {
       + Simulator.POINT_OF_FROZEN_EMBRYO_TRANSFER
   }
 
-  #calculatePercentageOfCopayment() {
-    return this.user.isInsuranceCoverage ? (Simulator.PERCENTAGE_OF_INSURANCE_COVERAGE / 100) : (Simulator.PERCENTAGE_OF_NOT_INSURANCE_COVERAGE / 100)
-  }
-
   calculateMedicalExpense(medicalRemunerationPoint) {
     return medicalRemunerationPoint * Simulator.MEDICAL_EXPENSE_PER_MEDICAL_REMUNERATION_POINT
   }
@@ -166,6 +143,29 @@ class Simulator {
 
   calculateReducedCopayment() {
     return this.calculateTotalMedicalExpenseOfCopayment(this.calculateTotalMedicalRemunerationPoint()) - this.calculateMaximumCopayment()
+  }
+
+  #referNumOfOvumRetrieved() {
+    const amh = this.user.amh
+    if (amh < 0.5) return 2.04
+    else if (0.5 <= amh && amh < 1.0) return 3.61
+    else if (1.0 <= amh && amh < 1.5) return 5.45
+    else if (1.5 <= amh && amh < 2.0) return 6.82
+    else if (2.0 <= amh && amh < 2.5) return 8.63
+    else if (2.5 <= amh && amh < 3.0) return 10.92
+    else if (3.0 <= amh ) return 13.50
+  }
+
+  #calculatePercentageOfCopayment() {
+    return this.user.isInsuranceCoverage ? (Simulator.PERCENTAGE_OF_INSURANCE_COVERAGE / 100) : (Simulator.PERCENTAGE_OF_NOT_INSURANCE_COVERAGE / 100)
+  }
+
+  #referPointOfIntracytoplasmicSpermInjection() {
+    const num = this.calculateNumOfIntracytoplasmicSpermInjection()
+    if (1 <= num && num < 2) return 4800
+    else if (2 <= num && num < 6) return 6800
+    else if (6 <= num && num < 10) return 10000
+    else if (10 <= num) return 12800
   }
 }
 
