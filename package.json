@@ -1,6 +1,6 @@
 {
   "name": "kounotori",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Estimate the medical expenses of Assisted reproductive technology.",
   "main": "index.js",
   "bin": {
