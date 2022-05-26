@@ -2,6 +2,7 @@
 
 const { User } = require('./user.js')
 const { Simulator } = require('./simulator.js')
+const { Terminal } = require('./terminal.js')
 const { agePrompt,
   confirmAmhPrompt,
   amhPrompt,
@@ -15,12 +16,13 @@ async function main() {
 
   const user = new User(age, amh)
   const simulator = new Simulator(user)
+  const terminal = new Terminal(simulator)
 
-  simulator.displaySimulationResultOfAssistedReproductiveTechnology(user)
+  terminal.displayAssistedReproductiveTechnology()
 
   if (user.isInsuranceCoverage && await confirmHighCostMedicalExpenseBenefitPrompt.run()) {
     user.classificationOfHighCostMedicalExpenseBenefit = await classificationOfHighCostMedicalExpenseBenefitPrompt.run()
-    simulator.calculateMaximumCopayment(user) ? simulator.displaySimulationResultOfAvailableHighCostMedicalExpenseBenefit(user) : simulator.displaySimulationResultOfUnavailableHighCostMedicalExpenseBenefit(user)
+    simulator.calculateMaximumCopayment() ? terminal.displayAvailableHighCostMedicalExpenseBenefit() : terminal.displayUnavailableHighCostMedicalExpenseBenefit()
   }
 }
 
